@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Pembayaran ReyProject</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+margin:0;
+background:linear-gradient(135deg,#020617,#0f172a,#020617);
+color:white;
+overflow-x:hidden;
+}
+
+/* background animasi */
+
+body::before{
+content:"";
+position:fixed;
+width:200%;
+height:200%;
+background:radial-gradient(circle,#38bdf820 1px,transparent 1px);
+background-size:40px 40px;
+animation:bgmove 20s linear infinite;
+z-index:-1;
+}
+
+@keyframes bgmove{
+from{transform:translate(0,0);}
+to{transform:translate(-200px,-200px);}
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:30px;
+text-align:center;
+}
+
+h1{
+font-size:36px;
+margin-bottom:5px;
+}
+
+.subtitle{
+opacity:0.7;
+margin-bottom:30px;
+}
+
+/* metode pembayaran */
+
+.methods{
+display:flex;
+justify-content:center;
+gap:25px;
+flex-wrap:wrap;
+}
+
+.method{
+background:#1e293b;
+padding:25px 40px;
+border-radius:14px;
+cursor:pointer;
+transition:0.3s;
+border:1px solid #334155;
+}
+
+.method:hover{
+transform:translateY(-6px) scale(1.05);
+background:#38bdf8;
+color:black;
+}
+
+/* card */
+
+.card{
+margin-top:40px;
+background:#1e293b;
+padding:30px;
+border-radius:15px;
+display:none;
+animation:fade 0.4s ease;
+box-shadow:0 15px 40px rgba(0,0,0,0.6);
+}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+.qr{
+width:260px;
+background:white;
+padding:10px;
+border-radius:12px;
+cursor:pointer;
+}
+
+/* tombol */
+
+.btn{
+padding:10px 18px;
+margin:6px;
+border:none;
+border-radius:8px;
+background:#38bdf8;
+color:black;
+font-weight:600;
+cursor:pointer;
+transition:0.25s;
+}
+
+.btn:hover{
+transform:scale(1.05);
+}
+
+/* nomor dana */
+
+.number{
+font-size:26px;
+color:#38bdf8;
+font-weight:600;
+}
+
+/* steps */
+
+.steps{
+text-align:left;
+margin-top:20px;
+line-height:1.7;
+}
+
+/* warning */
+
+.warning{
+margin-top:30px;
+background:#dc2626;
+padding:15px;
+border-radius:10px;
+font-weight:600;
+}
+
+/* bantuan */
+
+.help{
+margin-top:15px;
+opacity:0.85;
+}
+
+/* whatsapp */
+
+.cs{
+position:fixed;
+top:20px;
+right:20px;
+background:#25D366;
+width:55px;
+height:55px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:26px;
+text-decoration:none;
+color:white;
+box-shadow:0 8px 20px rgba(0,0,0,0.4);
+transition:0.3s;
+}
+
+.cs:hover{
+transform:scale(1.1);
+}
+
+/* modal zoom */
+
+.modal{
+display:none;
+position:fixed;
+z-index:999;
+left:0;
+top:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+justify-content:center;
+align-items:center;
+}
+
+.modal img{
+width:400px;
+max-width:90%;
+border-radius:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<a class="cs" href="https://wa.me/6285624870251" target="_blank">💬</a>
+
+<div class="container">
+
+<h1>Halaman Pembayaran</h1>
+<p class="subtitle">Silakan pilih metode pembayaran</p>
+
+<div class="methods">
+
+<div class="method" onclick="show('qris')">
+💳 QRIS
+</div>
+
+<div class="method" onclick="show('dana')">
+📱 DANA
+</div>
+
+</div>
+
+<!-- QRIS -->
+
+<div id="qris" class="card">
+
+<h2>Pembayaran QRIS</h2>
+
+<br>
+
+<img src="https://files.catbox.moe/jv02en.jpeg" class="qr" onclick="zoomQR()">
+
+<br>
+
+<button class="btn" onclick="zoomQR()">Zoom QR</button>
+
+<a href="https://files.catbox.moe/jv02en.jpeg" download>
+<button class="btn">Simpan QRIS</button>
+</a>
+
+<div class="steps">
+
+<b>Tata Cara Pembayaran:</b>
+
+<ol>
+<li>Buka aplikasi e-wallet atau mobile banking</li>
+<li>Pilih menu Scan QRIS</li>
+<li>Scan kode QR di atas</li>
+<li>Masukkan nominal pembayaran</li>
+<li>Konfirmasi transaksi</li>
+</ol>
+
+</div>
+
+</div>
+
+<!-- DANA -->
+
+<div id="dana" class="card">
+
+<h2>Transfer via DANA</h2>
+
+<p>Nomor DANA</p>
+
+<div class="number" id="danaNum">
+088292197590
+</div>
+
+<p>Atas Nama : <b>Linda Mandasari</b></p>
+
+<button class="btn" onclick="copyNum()">Copy Nomor</button>
+
+<div class="steps">
+
+<b>Tata Cara Transfer:</b>
+
+<ol>
+<li>Buka aplikasi DANA</li>
+<li>Pilih menu Kirim</li>
+<li>Masukkan nomor di atas</li>
+<li>Masukkan nominal pembayaran</li>
+<li>Konfirmasi transfer</li>
+</ol>
+
+</div>
+
+</div>
+
+<div class="warning">
+Setelah melakukan pembayaran, wajib kirim bukti transfer ke admin.
+</div>
+
+<div class="help">
+Jika mengalami kendala pembayaran, silakan hubungi Customer Service melalui tombol WhatsApp di pojok kanan atas.
+</div>
+
+</div>
+
+<!-- modal zoom -->
+
+<div id="qrModal" class="modal" onclick="closeQR()">
+<img src="https://files.catbox.moe/jv02en.jpeg">
+</div>
+
+<script>
+
+function show(id){
+
+document.getElementById("qris").style.display="none";
+document.getElementById("dana").style.display="none";
+
+document.getElementById(id).style.display="block";
+
+}
+
+function copyNum(){
+
+let num=document.getElementById("danaNum").innerText;
+navigator.clipboard.writeText(num);
+
+alert("Nomor DANA berhasil disalin");
+
+}
+
+function zoomQR(){
+document.getElementById("qrModal").style.display="flex";
+}
+
+function closeQR(){
+document.getElementById("qrModal").style.display="none";
+}
+
+</script>
+
+</body>
+</html>
